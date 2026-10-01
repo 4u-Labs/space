@@ -1,30 +1,63 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — Space Invaders | 4U.IA.BR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    body{
-      text-align:center;
-      color:white;
-      background-color:black;
-      font-family:'Orbitron';
+    body {
+      text-align: center;
+      color: #00ff66;
+      background-color: #05060c;
+      font-family: 'Press Start 2P', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
     }
-
-    a{
-      font-size:30px;
-      color:white;
-      text-decoration:none;
+    h1 {
+      font-size: 1.6rem;
+      color: #00ff66;
+      text-shadow: 0 0 15px rgba(0, 255, 102, 0.7);
+      margin-bottom: 20px;
     }
-
-    a:hover{
-      color:grey;
+    a {
+      font-size: 0.9rem;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border: 2px solid #00ff66;
+      border-radius: 8px;
+      display: inline-block;
+      width: 260px;
+      transition: all 0.2s ease;
+      background: rgba(10, 20, 35, 0.8);
+    }
+    a:hover {
+      background: #00ff66;
+      color: #000;
+      box-shadow: 0 0 20px #00ff66;
+      transform: scale(1.05);
+    }
+    .btn-special {
+      border-color: #ff3344;
+      color: #ff3344;
+    }
+    .btn-special:hover {
+      background: #ff3344;
+      color: #fff;
+      box-shadow: 0 0 20px #ff3344;
     }
   </style>
 </head>
 <body>
-  <h1 style="font-size:50px;">Space Invaders</h1>
-  <p><a href="space_invaders.html">Play</a></p>
-  <p><a href="show_highscore.php">Highscore</a></p>
-  <p><a href="../index.html">Main Menu</a></p>
+  <h1>SPACE INVADERS</h1>
+  <p><a href="index.html">▶ JOGAR AGORA</a></p>
+  <p><a href="show_highscore.php">🏆 HIGHSCORES</a></p>
+  <p><a href="/" class="btn-special">🏠 MENU 4U.IA.BR</a></p>
 </body>
 </html>

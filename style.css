@@ -1,0 +1,666 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Press+Start+2P&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --inv-green: #00ff66;
+    --inv-green-glow: rgba(0, 255, 102, 0.4);
+    --inv-red: #ff3344;
+    --inv-yellow: #ffff00;
+    --inv-cyan: #00ffff;
+    --inv-purple: #bd93f9;
+    --bg-dark: #05060c;
+    --border-neon: rgba(0, 255, 102, 0.6);
+    --font-retro: 'Press Start 2P', monospace;
+    --font-orbitron: 'Orbitron', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-dark);
+    font-family: var(--font-body);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: hidden;
+}
+
+/* =========================================
+   GABINETE ARCADE
+   ========================================= */
+.arcade-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto;
+}
+
+.arcade-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border-neon);
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 102, 0.4));
+}
+
+.arcade-title {
+    font-family: var(--font-retro);
+    font-size: 1rem;
+    color: var(--inv-green);
+    text-shadow: 0 0 10px rgba(0, 255, 102, 0.7);
+    letter-spacing: 1.5px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* PLACAR ARCADE RETRÔ */
+.score-board {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: rgba(8, 12, 24, 0.92);
+    border: 1px solid var(--border-neon);
+    border-radius: 8px;
+    padding: 8px 6px;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+}
+
+.score-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.score-label {
+    font-family: var(--font-retro);
+    font-size: 0.65rem;
+    color: var(--inv-red);
+    letter-spacing: 1px;
+}
+
+.high-score-label {
+    color: var(--inv-yellow);
+}
+
+.wave-label {
+    color: var(--inv-cyan);
+}
+
+.score-value {
+    font-family: var(--font-retro);
+    font-size: 0.85rem;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+}
+
+/* TELA DO JOGO (CANVAS RETRÔ CRT) */
+.arcade-screen {
+    position: relative;
+    background: #000;
+    border: 3px solid var(--inv-green);
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0, 255, 102, 0.35), inset 0 0 20px rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    touch-action: none;
+    width: 100%;
+}
+
+#space-canvas {
+    display: block;
+    width: 480px;
+    height: 600px;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background-color: #000000;
+    background-image: radial-gradient(circle, rgba(20, 25, 45, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%);
+}
+
+/* BARRA DE AÇÕES E VIDAS */
+.arcade-controls-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.btn-arcade {
+    font-family: var(--font-retro);
+    font-size: 0.65rem;
+    background: rgba(10, 20, 35, 0.95);
+    color: var(--inv-green);
+    border: 2px solid var(--inv-green);
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 255, 102, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    touch-action: manipulation;
+}
+
+.btn-arcade:hover {
+    background: var(--inv-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--inv-green);
+    transform: translateY(-2px);
+}
+
+.btn-arcade:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    color: var(--inv-cyan);
+    border-color: var(--inv-cyan);
+    box-shadow: 0 2px 8px rgba(0, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: var(--inv-cyan);
+    color: #000;
+    box-shadow: 0 0 15px var(--inv-cyan);
+}
+
+.lives-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-retro);
+    font-size: 0.65rem;
+    color: var(--inv-green);
+}
+
+.lives-label {
+    letter-spacing: 1px;
+}
+
+.lives-icons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.lives-icon {
+    display: inline-block;
+    width: 14px;
+    height: 10px;
+    background: var(--inv-green);
+    clip-path: polygon(45% 0, 55% 0, 55% 30%, 85% 30%, 100% 70%, 100% 100%, 0 100%, 0 70%, 15% 30%, 45% 30%);
+}
+
+.desktop-only {
+    display: inline;
+}
+
+/* =========================================
+   CONTROLES TOUCH PARA CELULAR
+   ========================================= */
+.touch-controls {
+    display: none; /* Ativado via media query em celulares */
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 4px;
+    touch-action: none;
+}
+
+.dpad-group {
+    display: flex;
+    gap: 8px;
+}
+
+.touch-btn {
+    font-family: var(--font-retro);
+    background: rgba(15, 25, 45, 0.9);
+    border: 2px solid var(--border-neon);
+    border-radius: 10px;
+    color: var(--inv-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+}
+
+.touch-btn-nav {
+    width: 60px;
+    height: 52px;
+    font-size: 1.4rem;
+}
+
+.touch-btn-fire {
+    flex: 1;
+    height: 52px;
+    max-width: 180px;
+    border-color: var(--inv-red);
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    background: rgba(45, 15, 25, 0.9);
+    box-shadow: 0 4px 12px rgba(255, 51, 68, 0.3);
+}
+
+.touch-btn:active {
+    background: var(--inv-green);
+    color: #000;
+    box-shadow: 0 0 15px var(--inv-green);
+    transform: scale(0.94);
+}
+
+.touch-btn-fire:active {
+    background: var(--inv-red);
+    color: #fff;
+    box-shadow: 0 0 20px var(--inv-red);
+    transform: scale(0.94);
+}
+
+/* =========================================
+   MODAL DE AJUDA / REGRAS
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.92);
+    background-color: #0d1222;
+    border: 2px solid var(--inv-green);
+    border-radius: 14px;
+    padding: 1.5rem;
+    z-index: 1000;
+    width: 90%;
+    max-width: 440px;
+    max-height: 85dvh;
+    overflow-y: auto;
+    box-shadow: 0 0 35px rgba(0, 255, 102, 0.3);
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active, .modal.active {
+    display: block;
+    opacity: 1;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.modal-content h2 {
+    font-family: var(--font-retro);
+    color: var(--inv-green);
+    font-size: 0.85rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.6rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-body {
+    font-size: 0.8rem;
+    color: #c0c6db;
+    line-height: 1.5;
+}
+
+.modal-body p {
+    margin-bottom: 0.6rem;
+}
+
+.score-table {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 0.8rem 0;
+}
+
+.score-table h3 {
+    font-family: var(--font-retro);
+    font-size: 0.65rem;
+    color: var(--inv-yellow);
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.score-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.75rem;
+}
+
+.score-row:last-child {
+    border-bottom: none;
+}
+
+.score-icon {
+    font-size: 1rem;
+}
+
+.score-desc {
+    font-weight: 500;
+}
+
+.score-pts {
+    font-family: var(--font-retro);
+    font-size: 0.6rem;
+    color: var(--inv-green);
+}
+
+.modal-body ul {
+    padding-left: 1.2rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.6rem;
+}
+
+.modal-body li {
+    margin-bottom: 0.3rem;
+}
+
+/* =========================================
+   RODAPÉ
+   ========================================= */
+.footer-clean {
+    width: 100%;
+    padding: 2rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.footer-clean span {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVIDADE (MOBILE & TOUCH — 100dvh NO SCROLL)
+   ========================================= */
+@media (max-width: 768px) {
+    html, body {
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        touch-action: none;
+    }
+
+    .desktop-only {
+        display: none !important;
+    }
+
+    .footer-clean {
+        display: none !important;
+    }
+
+    .arcade-container {
+        width: 100%;
+        height: 100%;
+        height: 100dvh;
+        max-height: 100dvh;
+        padding: 6px 8px calc(env(safe-area-inset-bottom, 6px) + 2px) 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* Cabeçalho Compacto */
+    .arcade-header {
+        padding-bottom: 4px;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    .brand-logo {
+        height: 24px;
+    }
+
+    .arcade-title {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 4px;
+    }
+
+    .header-actions .btn-arcade {
+        padding: 4px 8px;
+        font-size: 0.55rem;
+    }
+
+    /* Placar Compacto */
+    .score-board {
+        padding: 3px 6px;
+        flex-shrink: 0;
+        box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+    }
+
+    .score-box {
+        gap: 2px;
+    }
+
+    .score-label {
+        font-size: 0.55rem;
+    }
+
+    .score-value {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    /* Tela de Jogo Flexível e Responsiva (Canvas Auto-Fit) */
+    .arcade-screen {
+        flex: 1 1 0;
+        min-height: 0;
+        min-width: 0;
+        width: 100%;
+        border-width: 2px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 255, 102, 0.25), inset 0 0 12px rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    #space-canvas {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        object-fit: contain;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        border-radius: 4px;
+    }
+
+    /* Barra de Ações em Linha Única */
+    .arcade-controls-bar {
+        margin-top: 0;
+        gap: 6px;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .arcade-controls-bar .btn-arcade {
+        padding: 5px 10px;
+        font-size: 0.6rem;
+        flex: 0 1 auto;
+    }
+
+    .lives-indicator {
+        font-size: 0.55rem;
+    }
+
+    .lives-icon {
+        width: 12px;
+        height: 8px;
+    }
+
+    /* Controles Touch Ergonômicos */
+    .touch-controls {
+        display: flex;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .touch-btn-nav {
+        width: 52px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+
+    .touch-btn-fire {
+        height: 48px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Telas Ultra-Compactas (ex: iPhone SE, tela paisagem ou teclado virtual aberto) */
+@media (max-width: 768px) and (max-height: 640px) {
+    .arcade-container {
+        padding: 4px 6px;
+        gap: 2px;
+    }
+
+    .arcade-header {
+        padding-bottom: 2px;
+    }
+
+    .brand-logo {
+        height: 20px;
+    }
+
+    .arcade-title {
+        font-size: 0.8rem;
+    }
+
+    .score-board {
+        padding: 2px 4px;
+    }
+
+    .score-label {
+        font-size: 0.5rem;
+    }
+
+    .score-value {
+        font-size: 0.7rem;
+    }
+
+    .arcade-controls-bar .btn-arcade {
+        padding: 4px 8px;
+        font-size: 0.55rem;
+    }
+
+    .touch-controls {
+        gap: 6px;
+        margin: 1px 0;
+    }
+
+    .touch-btn-nav {
+        width: 44px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .touch-btn-fire {
+        height: 40px;
+        font-size: 0.65rem;
+    }
+}
